@@ -1,5 +1,5 @@
-# STT meeting
-Typical process of makeing a meeting note.
+# Réunion-zzz
+Typical process of making a meeting note.
 
 1. Record audio
 2. Transcribe (Use `transcribe_meeting.py` covers it)

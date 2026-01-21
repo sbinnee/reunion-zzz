@@ -1,9 +1,13 @@
 [project]
-name = "meeting-stt"
+name = "reunion-zzz"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
+license = "WTFPL"
+authors = [
+    { name = "Seongbin Lim", email = "sungbin246@gmail.com" }
+]
 dependencies = [
     "elevenlabs[pyaudio]>=2.29.0",
     "openai>=2.14.0",
