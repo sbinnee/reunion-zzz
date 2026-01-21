@@ -249,23 +249,6 @@ def render_transcript(transcription: Any) -> str:
     return "\n".join(lines)
 
 
-def generate_meeting_notes(client: OpenAI, transcript_text: str) -> str:
-    logger.info("Generating meeting notes and summary")
-    system_prompt = (
-        "You are a meeting assistant. Generate concise meeting notes and a short summary. "
-        "Respond in Korean. Use clear headings and bullet points. "
-        "Include action items and decisions if present."
-    )
-    response = client.responses.create(
-        model="gpt-4o-mini",
-        input=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": transcript_text},
-        ],
-    )
-    return response.output_text.strip()
-
-
 def main() -> None:
     from dotenv import load_dotenv
 
@@ -400,7 +383,6 @@ def main() -> None:
 
     transcript_json_path = out_dir / "transcript.json"
     transcript_text_path = out_dir / "transcript.txt"
-    minutes_path = out_dir / "meeting_notes.md"
 
     with transcript_json_path.open("w", encoding="utf-8") as f:
         if hasattr(transcription, "model_dump"):
@@ -411,12 +393,8 @@ def main() -> None:
     transcript_text = render_transcript(transcription)
     transcript_text_path.write_text(transcript_text, encoding="utf-8")
 
-    minutes = generate_meeting_notes(client, transcript_text)
-    minutes_path.write_text(minutes + "\n", encoding="utf-8")
-
     logger.info("Saved transcript JSON: %s", transcript_json_path)
     logger.info("Saved transcript text: %s", transcript_text_path)
-    logger.info("Saved meeting notes: %s", minutes_path)
 
 
 if __name__ == "__main__":
